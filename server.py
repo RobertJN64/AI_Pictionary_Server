@@ -28,4 +28,4 @@ def save_canvas():
 def run(_imlist):
     global imlist
     imlist = _imlist
-    app.run('localhost', 80)
+    app.run('0.0.0.0', 80)
