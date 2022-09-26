@@ -115,6 +115,11 @@
       change = true;
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     }
+
+    function fs() {
+      document.documentElement.webkitRequestFullScreen();
+      document.getElementById("fs").style.display = 'none';
+    }
   </script>
 </head>
 
@@ -124,6 +129,7 @@
 
   <div style="text-align: center;">
     <button onclick="clear_canvas()" class="nice_button" style="background-color: red">Clear!</button>
+    <button id='fs' onclick="fs()" class="nice_button" style="background-color: red">FS</button>
   </div>
   <script>
     activate_canvas();
