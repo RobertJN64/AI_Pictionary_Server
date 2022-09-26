@@ -20,7 +20,7 @@
     var ctx;
     var pos;
     var change = true;
-    var size = 10; //TODO - set size
+    var size = 20; //TODO - set size
 
     // resize canvas
     function resize() {
@@ -47,8 +47,9 @@
 
       canvas.addEventListener("touchstart", function (e) {
         var touch = e.touches[0];
-        pos.x = touch.clientX;
-        pos.y = touch.clientY;
+        pos.x = touch.clientX - 1;
+        pos.y = touch.clientY - 1;
+        draw(pos.x, pos.y)
       });
 
       canvas.addEventListener("touchmove", function (e) {

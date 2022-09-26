@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 from tensorflow import keras
 
 def process_image(img: Image.Image):
-    img = img.resize((28,28))
+    img = img.resize((28,28), Image.NEAREST)
 
      # noinspection PyTypeChecker
     arr = np.asarray(img)
@@ -35,11 +35,11 @@ def run(imlist):
                 img = process_image(imlist[0])
                 ax_im.imshow(img, cmap='gray')
 
-                X = img.reshape(-1, 784).astype("float32") / 255.0
+                X = img.reshape(-1, 28, 28).astype("float32")
                 pred = model.predict(X)[0]
                 ax_gr.clear()
-                ax_gr.bar(list(map(str, range(0, 10))), pred)
-                ax_gr.set_xticks(list(range(len(labels))), labels=labels)
+                ax_gr.bar(labels, pred)
+                pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
                 print(np.argmax(pred))
 
         pyplot.draw()
