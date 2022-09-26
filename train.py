@@ -1,5 +1,5 @@
-import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
+# import os
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 import tensorflow as tf
 from tensorflow import keras
 

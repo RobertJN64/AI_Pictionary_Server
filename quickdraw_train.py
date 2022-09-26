@@ -1,5 +1,5 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -8,18 +8,6 @@ import os
 #https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/numpy_bitmap
 
 SAMPLE_SIZE = 10000 #sample 10 thousand items from each group
-
-def get_model():
-    model = keras.Sequential(
-        [keras.layers.Dense(128, activation='relu'),
-         keras.layers.Dense(10)])
-
-    model.compile(
-        optimizer='adam',
-        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-        metrics=["accuracy"])
-
-    return model
 
 def train():
     labels = sorted([name.removesuffix('.npy') for name in os.listdir('qd_files')])
@@ -45,6 +33,9 @@ def train():
     X = full[:, 0:784]
     Y = full[:, 784]
 
+    Y = Y.astype("int")
+    X = X.reshape(-1, 28, 28)
+
     print("Splitting data...")
     splitpoint = int(len(X) * 0.7)
     trainX = X[:splitpoint]
@@ -53,14 +44,16 @@ def train():
     trainY = Y[:splitpoint]
     testY = Y[splitpoint:]
 
+
     print("Creating model...")
-    model = get_model()
+    import model_scripts.adv as adv
+    model = adv.get_model(len(labels))
     print("Starting training...")
     model.fit(trainX, trainY, epochs=50)
     print("Evaluating model...")
     model.evaluate(testX, testY, batch_size=128)
 
-    model.save('qd_model')
+    model.save('qd_model_new')
 
 if __name__  == '__main__':
     train()

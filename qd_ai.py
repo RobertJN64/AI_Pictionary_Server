@@ -40,7 +40,7 @@ def run(imlist):
                 ax_gr.clear()
                 ax_gr.bar(labels, pred)
                 pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
-                print(np.argmax(pred))
+                print(labels[np.argmax(pred)])
 
         pyplot.draw()
         pyplot.pause(0.01)

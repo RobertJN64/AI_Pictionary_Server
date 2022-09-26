@@ -1,5 +1,5 @@
 import os
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
+# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 import numpy as np
 
 from MLDashboard.MLDashboardBackend import createDashboard
@@ -9,9 +9,6 @@ from MLDashboard.MLCommunicationBackend import Message, MessageMode
 #https://console.cloud.google.com/storage/browser/quickdraw_dataset/full/numpy_bitmap
 
 SAMPLE_SIZE = 10000 #sample 10 thousand items from each group
-
-
-
 
 def train():
     # Create dashboard and return communication tools (this starts the process)
@@ -64,7 +61,7 @@ def train():
     print("Evaluating model...")
     model.evaluate(testX, testY, batch_size=128, callbacks=callback)
 
-    model.save('qd_model')
+    model.save('qd_model_new')
 
     updatelist.append(Message(MessageMode.End, {}))
     print("Exiting cleanly...")
