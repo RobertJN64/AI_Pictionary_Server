@@ -1,6 +1,7 @@
 import multiprocessing
 import server
-import ai
+import qd_ai as ai
+#import ai
 
 
 
