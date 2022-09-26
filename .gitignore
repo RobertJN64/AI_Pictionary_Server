@@ -1,2 +1,5 @@
 .idea
 __pycache__
+*.npy
+qd_model
+tf_model
