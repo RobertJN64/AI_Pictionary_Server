@@ -1,9 +1,6 @@
 import multiprocessing
 import server
-import qd_ai as ai
-#import ai
-
-
+import ai
 
 if __name__ == '__main__':
     mm = multiprocessing.Manager()

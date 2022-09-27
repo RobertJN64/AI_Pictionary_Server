@@ -2,7 +2,7 @@ from tensorflow import keras
 
 #https://thomasdelatte.com/2020/04/quickdraw/
 
-def get_model(output):
+def adv(output):
     model = keras.Sequential()
     model.add(keras.layers.Convolution2D(16, (3, 3),
                             padding="same",

@@ -1,5 +1,0 @@
-USED: eyeglasses, fork, mug, smiley_face, stop_sign, windmill
-UNUSED: bike, calculator, dog, sun
-
-USED: The Eiffel Tower, The Great Wall of China, The Mona Lisa, basketball
-UNUSED: ant, bike, calculator, dog, eyeglasses, fork, mug, smiley_face, stop_sign, sun, windmill

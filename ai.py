@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 from tensorflow import keras
 
 def process_image(img: Image.Image):
-    img = img.resize((28,28))
+    img = img.resize((28,28), Image.NEAREST)
 
      # noinspection PyTypeChecker
     arr = np.asarray(img)
@@ -17,7 +17,9 @@ def process_image(img: Image.Image):
     return arr
 
 def run(imlist):
-    model = keras.models.load_model("tf_model")
+    labels = sorted([name.removesuffix('.npy') for name in os.listdir('qd_files')])
+    print(labels)
+    model = keras.models.load_model("qd_model")
 
 
     fig, (ax_im, ax_gr) = pyplot.subplots(1, 2, figsize=(10, 5))
@@ -33,11 +35,12 @@ def run(imlist):
                 img = process_image(imlist[0])
                 ax_im.imshow(img, cmap='gray')
 
-                X = img.reshape(-1, 784).astype("float32") / 255.0
+                X = img.reshape(-1, 28, 28).astype("float32")
                 pred = model.predict(X)[0]
                 ax_gr.clear()
-                ax_gr.bar(list(map(str, range(0, 10))), pred)
-                print(np.argmax(pred))
+                ax_gr.bar(labels, pred)
+                pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
+                print(labels[np.argmax(pred)])
 
         pyplot.draw()
         pyplot.pause(0.01)

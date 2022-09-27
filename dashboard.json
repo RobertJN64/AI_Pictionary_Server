@@ -1,20 +1,23 @@
 {
   "modules": [
     [
-       ["LossMetricsGraph", {}],
-       ["LossMetricsNumerical", {}],
-       ["TrainingSetSampleImages", {"refreshrate":  1}]
+      ["LossMetricsGraph", {}],
+      ["LossMetricsNumerical", {}],
+      ["TrainingSetSampleImages", {}]
     ],
     [
-       ["StatusModule", {}],
-       ["WrongPredImages", {"refreshrate": 1}],
-       ["PredImages", {"refreshrate": 1}]
+      ["StatusModule", {}],
+      ["WrongPredImages", {}],
+      ["PredImages", {}]
     ]
   ],
-  "config": {"width": 28,
-           "height": 28,
-           "rows": 2,
-           "cols": 4,
-           "correctcolor": "blue",
-           "incorrectcolor": "orange"}
+  "config": {
+    "width": 28,
+    "height": 28,
+    "rows": 2,
+    "cols": 4,
+    "correctcolor": "blue",
+    "incorrectcolor": "orange",
+    "refreshrate": 0
+  }
 }
