@@ -1,8 +1,7 @@
-#https://dev.to/larswaechter/recognizing-hand-drawn-doodles-using-deep-learning-ki0
-
 from matplotlib import pyplot
 from PIL import Image
 import numpy as np
+import json
 
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
@@ -17,9 +16,12 @@ def process_image(img: Image.Image):
     return arr
 
 def run(imlist):
-    labels = sorted([name.removesuffix('.npy') for name in os.listdir('qd_files')])
-    print(labels)
-    model = keras.models.load_model("qd_model")
+    model_name = 'basic'
+    print("Using model:", model_name)
+    with open('models/' + model_name + '/qd.json') as f:
+        labels = sorted(json.load(f))
+    print("Labels:", labels)
+    model = keras.models.load_model("models/" + model_name + "/qd_model")
 
 
     fig, (ax_im, ax_gr) = pyplot.subplots(1, 2, figsize=(10, 5))
