@@ -8,9 +8,13 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 from tensorflow import keras
 
 # CONFIG
-CONFIG_HIDE_GUESS = True #hide guesses while drawing
+CONFIG_HIDE_GUESS = False #hide guesses while drawing
+CONFIG_USE_THRESH_DELTA = True
 CONFIG_GUESS_THRESH = 5 #guess threshold (top choice)
 CONFIG_SHOW_NUM = 5 #Number of guesses to show
+
+CONFIG_USE_PROB = True
+CONFIG_PROB_THRESH = 0.95
 
 def process_image(img: Image.Image):
     img = img.resize((28,28), Image.NEAREST)
@@ -21,7 +25,7 @@ def process_image(img: Image.Image):
     return arr
 
 def run(imlist):
-    model_name = 'v2'
+    model_name = 'v3'
     print("Using model:", model_name)
     with open('models/' + model_name + '/qd.json') as f:
         labels = sorted(json.load(f))
@@ -48,9 +52,22 @@ def run(imlist):
                 pred_labels = sorted(zip(pred, labels), reverse=True)
                 ax_gr.clear()
 
-                if pred_labels[0][0] >= CONFIG_GUESS_THRESH:
+                probability_model = keras.Sequential([model, keras.layers.Softmax()])
+                print()
+
+                disp = 0
+                if CONFIG_USE_PROB:
+                    if max(probability_model.predict(X)[0]) > CONFIG_PROB_THRESH:
+                        disp += 1
+                else:
+                    disp += 1
+
+                if ((CONFIG_USE_THRESH_DELTA and pred_labels[0][0] - pred_labels[1][0] >= CONFIG_GUESS_THRESH) or
+                        (not CONFIG_USE_THRESH_DELTA and pred_labels[0][0] >= CONFIG_GUESS_THRESH)):
+                    disp += 1
+
+                if disp == 2:
                     ax_gr.text(0.5, 0.5, pred_labels[0][1], fontsize=30, ha='center')
-                    pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
 
                 else:
                     t_labels = [label[1] for label in pred_labels[0:CONFIG_SHOW_NUM]]
