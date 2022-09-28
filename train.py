@@ -69,12 +69,12 @@ def train():
 
 
     print("Starting training...")
-    model.fit(trainX, trainY, epochs=10, callbacks=callback)
+    model.fit(trainX, trainY, epochs=15, callbacks=callback)
     print("Evaluating model...")
     model.evaluate(testX, testY, batch_size=128, callbacks=callback)
 
     model.save('models/new/qd_model')
-    with open("models/new/qd.json", 'w+') as f:
+    with open("models/v2/qd.json", 'w+') as f:
         json.dump(labels, f, indent=4)
 
     if use_db:

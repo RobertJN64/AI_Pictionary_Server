@@ -7,6 +7,11 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' #stops agressive error message printing
 from tensorflow import keras
 
+# CONFIG
+CONFIG_HIDE_GUESS = True #hide guesses while drawing
+CONFIG_GUESS_THRESH = 5 #guess threshold (top choice)
+CONFIG_SHOW_NUM = 5 #Number of guesses to show
+
 def process_image(img: Image.Image):
     img = img.resize((28,28), Image.NEAREST)
 
@@ -16,7 +21,7 @@ def process_image(img: Image.Image):
     return arr
 
 def run(imlist):
-    model_name = 'basic'
+    model_name = 'v2'
     print("Using model:", model_name)
     with open('models/' + model_name + '/qd.json') as f:
         labels = sorted(json.load(f))
@@ -39,10 +44,25 @@ def run(imlist):
 
                 X = img.reshape(-1, 28, 28).astype("float32")
                 pred = model.predict(X)[0]
+
+                pred_labels = sorted(zip(pred, labels), reverse=True)
                 ax_gr.clear()
-                ax_gr.bar(labels, pred)
-                pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
-                print(labels[np.argmax(pred)])
+
+                if pred_labels[0][0] >= CONFIG_GUESS_THRESH:
+                    ax_gr.text(0.5, 0.5, pred_labels[0][1], fontsize=30, ha='center')
+                    pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
+
+                else:
+                    t_labels = [label[1] for label in pred_labels[0:CONFIG_SHOW_NUM]]
+                    if CONFIG_HIDE_GUESS:
+                        show_labels = []
+                        for i in range(0, len(t_labels)):
+                            show_labels.append(" " * i + "?" + " " * i)
+                    else:
+                        show_labels = t_labels
+                    ax_gr.bar(show_labels, [pred[0] for pred in pred_labels][0:CONFIG_SHOW_NUM])
+                    if not CONFIG_HIDE_GUESS:
+                        pyplot.setp(ax_gr.get_xticklabels(), fontsize=10, rotation=45)
 
         pyplot.draw()
         pyplot.pause(0.01)
