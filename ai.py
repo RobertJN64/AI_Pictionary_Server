@@ -10,11 +10,11 @@ from tensorflow import keras
 # CONFIG
 CONFIG_HIDE_GUESS = False #hide guesses while drawing
 CONFIG_USE_THRESH_DELTA = True
-CONFIG_GUESS_THRESH = 5 #guess threshold (top choice)
+CONFIG_GUESS_THRESH = 2 #guess threshold (top choice)
 CONFIG_SHOW_NUM = 5 #Number of guesses to show
 
 CONFIG_USE_PROB = True
-CONFIG_PROB_THRESH = 0.95
+CONFIG_PROB_THRESH = 0.90
 
 def process_image(img: Image.Image):
     img = img.resize((28,28), Image.NEAREST)
@@ -25,7 +25,7 @@ def process_image(img: Image.Image):
     return arr
 
 def run(imlist):
-    model_name = 'v3'
+    model_name = 'new'
     print("Using model:", model_name)
     with open('models/' + model_name + '/qd.json') as f:
         labels = sorted(json.load(f))

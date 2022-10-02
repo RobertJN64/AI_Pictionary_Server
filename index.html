@@ -20,12 +20,12 @@
     var ctx;
     var pos;
     var change = true;
-    var size = 20; //TODO - set size
+    var size = 30; //TODO - set size
 
     // resize canvas
     function resize() {
-      ctx.canvas.width = 400;
-      ctx.canvas.height = 400;
+      ctx.canvas.width = 600;
+      ctx.canvas.height = 600;
     }
 
     function activate_canvas() {
@@ -65,12 +65,6 @@
     function setPosition(e) {
       pos.x = e.clientX;
       pos.y = e.clientY;
-    }
-
-    // resize canvas
-    function resize() {
-      ctx.canvas.width = 400;
-      ctx.canvas.height = 400;
     }
 
     function draw(x, y) {
