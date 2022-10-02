@@ -30,3 +30,7 @@ Set the model name you chose in [ai.py](ai.py#L28) Run the server by running [ma
 and load up the display (matplotlib). Go to the IP printed in the console, and interact with
 the model by drawing in the box provided. You can connect using another device on the 
 same network.
+
+## Advanced
+
+You can tweak the config at the top of [ai.py](ai.py) to adjust the guess thresholds.
